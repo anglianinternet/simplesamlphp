@@ -24,7 +24,7 @@ esac
 
 
 mkdir -p "$PUBLIC_PATH"
-cp -a "$REPO_ROOT/public/." "$PUBLIC_PATH/"
+rsync -a --delete "$REPO_ROOT/public/" "$PUBLIC_PATH/"
 ln -s "$CONFIG_PATH"/* "$REPO_ROOT/config"
 echo "deploy.sh: symlink created: $PUBLIC_PATH -> $REPO_ROOT/public"
 
