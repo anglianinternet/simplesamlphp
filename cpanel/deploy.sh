@@ -6,6 +6,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Symlink: $HOME/public_html/authentication -> repo/public
 LINK_PATH="${LINK_PATH:-$HOME/public_html/authentication}"
+CONFIG_PATH="${CONFIG_PATH:-$HOME/private/saml-configuration}"
 
 err() { echo "deploy.sh: $*" >&2; exit 1; }
 
@@ -31,6 +32,7 @@ if [[ -e "$LINK_PATH" ]]; then
 fi
 
 ln -s "$REPO_ROOT/public" "$LINK_PATH"
+ln -s "$CONFIG_PATH"/* "$REPO_ROOT/config"
 echo "deploy.sh: symlink created: $LINK_PATH -> $REPO_ROOT/public"
 
 # Composer: prefer PATH, then ~/bin/composer
