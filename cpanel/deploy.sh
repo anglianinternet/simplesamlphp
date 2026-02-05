@@ -6,7 +6,6 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Symlink: $HOME/public_html/authentication -> repo/public
 PUBLIC_PATH="${PUBLIC_PATH:-$HOME/public_html/authentication}"
-CONFIG_PATH="${CONFIG_PATH:-$HOME/private/saml-configuration}"
 
 err() { echo "deploy.sh: $*" >&2; exit 1; }
 
@@ -25,8 +24,6 @@ esac
 
 mkdir -p "$PUBLIC_PATH"
 rsync -a --delete "$REPO_ROOT/public/" "$PUBLIC_PATH/"
-ln -s "$CONFIG_PATH"/* "$REPO_ROOT/config"
-echo "deploy.sh: symlink created: $PUBLIC_PATH -> $REPO_ROOT/public"
 
 # Composer: prefer PATH, then ~/bin/composer
 COMPOSER=""

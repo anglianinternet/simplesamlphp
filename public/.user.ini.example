@@ -1,0 +1,3 @@
+; Copy to .user.ini and set SIMPLESAMLPHP_UPSTREAM to the repo root (directory containing src/)
+env[SIMPLESAMLPHP_UPSTREAM] = /path/to/simplesamlphp
+env[SIMPLESAMLPHP_CONFIG_DIR ] = /path/to/config
