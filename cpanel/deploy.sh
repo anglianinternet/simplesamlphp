@@ -5,35 +5,28 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Symlink: $HOME/public_html/authentication -> repo/public
-LINK_PATH="${LINK_PATH:-$HOME/public_html/authentication}"
+PUBLIC_PATH="${PUBLIC_PATH:-$HOME/public_html/authentication}"
 CONFIG_PATH="${CONFIG_PATH:-$HOME/private/saml-configuration}"
 
 err() { echo "deploy.sh: $*" >&2; exit 1; }
 
 # Require path to be set and non-empty
-[[ -n "${LINK_PATH:-}" ]] || err "LINK_PATH is empty"
+[[ -n "${PUBLIC_PATH:-}" ]] || err "PUBLIC_PATH is empty"
 
 # Require path to be under $HOME (no escaping outside home)
-case "$LINK_PATH" in
+case "$PUBLIC_PATH" in
   "$HOME"|"$HOME"/*) ;;
-  *) err "LINK_PATH must be under \$HOME: $LINK_PATH" ;;
+  *) err "PUBLIC_PATH must be under \$HOME: $PUBLIC_PATH" ;;
 esac
 
 # Require repo layout
 [[ -d "$REPO_ROOT/public" ]] || err "missing repo dir: public/"
 
-# If target exists and is not a symlink, do not overwrite
-if [[ -e "$LINK_PATH" ]]; then
-  if [[ -L "$LINK_PATH" ]]; then
-    rm "$LINK_PATH"
-  else
-    err "LINK_PATH exists but is not a symlink (cannot overwrite): $LINK_PATH"
-  fi
-fi
 
-ln -s "$REPO_ROOT/public" "$LINK_PATH"
+mkdir -p "$PUBLIC_PATH"
+cp -a "$REPO_ROOT/public/." "$PUBLIC_PATH/"
 ln -s "$CONFIG_PATH"/* "$REPO_ROOT/config"
-echo "deploy.sh: symlink created: $LINK_PATH -> $REPO_ROOT/public"
+echo "deploy.sh: symlink created: $PUBLIC_PATH -> $REPO_ROOT/public"
 
 # Composer: prefer PATH, then ~/bin/composer
 COMPOSER=""
