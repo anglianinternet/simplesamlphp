@@ -5,11 +5,8 @@ declare(strict_types=1);
 // Set start-time for debugging purposes
 define('SIMPLESAMLPHP_START', hrtime(true));
 
-// Bootstrap the application
-require_once __DIR__ . '/_bootstrap.php';
-
 // initialize the autoloader
-require_once SIMPLESAMLPHP_UPSTREAM . '/src/_autoload.php';
+require_once(dirname(__FILE__, 2) . '/src/_autoload.php');
 
 use SAML2\Compat\ContainerSingleton;
 use SimpleSAML\Compat\SspContainer;
