@@ -25,6 +25,10 @@ esac
 mkdir -p "$PUBLIC_PATH"
 rsync -a --delete "$REPO_ROOT/public/" "$PUBLIC_PATH/"
 
+# Ensure correct permissions for public web files (dirs 755, files 644)
+find "$PUBLIC_PATH" -type d -exec chmod 755 {} \;
+find "$PUBLIC_PATH" -type f -exec chmod 644 {} \;
+
 # Composer: prefer PATH, then ~/bin/composer
 COMPOSER=""
 if command -v composer >/dev/null 2>&1; then
