@@ -5,8 +5,9 @@ declare(strict_types=1);
 // Set start-time for debugging purposes
 define('SIMPLESAMLPHP_START', hrtime(true));
 
-// initialize the autoloader
-require_once('/home/one/repositories/simplesamlphp/src/_autoload.php');
+// initialize the autoloader (path overridable via SIMPLESAMLPHP_AUTOLOAD_PATH)
+$autoloadPath = getenv('SIMPLESAMLPHP_AUTOLOAD_PATH') ?: '/home/one/repositories/simplesamlphp/src/_autoload.php';
+require_once $autoloadPath;
 
 use SAML2\Compat\ContainerSingleton;
 use SimpleSAML\Compat\SspContainer;
