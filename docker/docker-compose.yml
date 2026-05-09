@@ -1,0 +1,26 @@
+name: anglian-saml-idp
+
+# SAML 2.0 IdP for local development (Anglian Internet monorepo).
+# Run from this directory: docker compose up -d
+#
+# Published URL (default): http://localhost:8088/simplesaml/
+# Consumers: mount SP config in api/ and comms-billing/ compose stacks; SP metadata must match this URL.
+#
+# Port: set SAML_IDP_PORT if 8088 is taken; then update docker/idp/metadata/*.php and SP authsources idp URLs.
+
+services:
+  idp:
+    image: php:8.1-apache
+    container_name: anglian-saml-idp
+    ports:
+      - "${SAML_IDP_PORT:-8088}:80"
+    volumes:
+      - ..:/var/repositories/simplesamlphp
+      - ../public:/var/www/html/simplesaml
+      - ./idp/config:/var/repositories/simplesamlphp/config
+      - ./idp/metadata:/var/repositories/simplesamlphp/metadata
+      - ./idp/data:/var/repositories/simplesamlphp/data
+    environment:
+      SIMPLESAMLPHP_CONFIG_DIR: /var/repositories/simplesamlphp/config
+      SIMPLESAMLPHP_ADMIN_PASSWORD: ${SIMPLESAMLPHP_ADMIN_PASSWORD:-secret}
+      SIMPLESAMLPHP_AUTOLOAD_PATH: /var/repositories/simplesamlphp/src/_autoload.php

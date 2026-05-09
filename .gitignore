@@ -233,3 +233,14 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# --- Anglian Internet Docker IdP (tracked; root config/* and metadata/* would otherwise match) ---
+!/docker/
+!/docker/docker-compose.yml
+!/docker/idp/
+!/docker/idp/config/
+!/docker/idp/config/**
+!/docker/idp/metadata/
+!/docker/idp/metadata/**
+!/docker/idp/data/
+!/docker/idp/data/**
